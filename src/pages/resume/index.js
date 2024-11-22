@@ -7,7 +7,6 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useDispatch } from 'react-redux';
 import { setIsAuth } from '../../state/userProfile';
-
 import './index.css';
 
 
@@ -55,19 +54,20 @@ const Resume = ()=>{
     {
       title: 'Profile Section',
       content: (
-          <Form form = {form}>
-          Add your profile details
+          <Form autoComplete='off' form = {form}>
+            <Form.Item style={{display:'flex',justifyContent:'center'}}>
+              Add your profile details</Form.Item>
             <Form.Item >
-              <Input name="name" value={resumeData.name} onChange={handleChange} placeholder='First Name' />
+              <Input  style={{padding:'12px 24px'}} name="name" value={resumeData.name} onChange={handleChange} placeholder='First Name' />
             </Form.Item>
             <Form.Item >
-              <Input name="lastName" value={resumeData.lastName} onChange={handleChange} placeholder='Last Name'/>
+              <Input style={{padding:'12px 24px'}} name="lastName" value={resumeData.lastName} onChange={handleChange} placeholder='Last Name'/>
             </Form.Item>
             <Form.Item >
-              <Input name="number" value={resumeData.number} onChange={handleChange} placeholder='Phone Number'/>
+              <Input style={{padding:'12px 24px'}} name="number" value={resumeData.number} onChange={handleChange} placeholder='Phone Number'/>
             </Form.Item>
             <Form.Item >
-              <Input name="adress" value={resumeData.adress} onChange={handleChange} placeholder='Adress' />
+              <Input style={{padding:'12px 24px'}} name="adress" value={resumeData.adress} onChange={handleChange} placeholder='Adress' />
             </Form.Item>
             <Form.Item >
             <Upload>
@@ -83,73 +83,71 @@ const Resume = ()=>{
     {
       title: 'Education Section',
       content: (
-        <div>
-          <Form>
-            <Form.Item label="Degree">
-              <Input name="degree" value={resumeData.degree} onChange={handleChange} />
+        
+        <Form autoComplete='off' form = {form} >
+            <Form.Item style={{display:'flex',justifyContent:'center'}}>
+              Add your Education details
+              </Form.Item>
+            <Form.Item >
+              <Input style={{padding:'12px 24px'}} name="degree" value={resumeData.degree} onChange={handleChange} placeholder='Course Name' />
             </Form.Item>
-            <Form.Item label="Institution">
-              <Input name="institution" value={resumeData.institution} onChange={handleChange} />
+            <Form.Item >
+              <Input style={{padding:'12px 24px'}} name="institution" value={resumeData.institution} onChange={handleChange} placeholder='Completion Year *' />
             </Form.Item>
-            <Form.Item label="Graduation Date">
-              <DatePicker onChange={handleDateChange} value={resumeData.graduationDate} />
+            <Form.Item >
+              <Input style={{padding:'12px 24px'}} name="institution" value={resumeData.institution} onChange={handleChange} placeholder='College/School' />
             </Form.Item>
+            <Form.Item >
+              <Input style={{padding:'12px 24px'}} name="institution" value={resumeData.institution} onChange={handleChange} placeholder='Percentage *' />
+            </Form.Item>
+            
           </Form>
-        </div>
+        
       ),
     },
     {
       title: 'Skills Sector',
       content: (
-        <div>
-          <Form>
-            <Form.Item label="Job Title">
-              <Input name="jobTitle" value={resumeData.jobTitle} onChange={handleChange} />
-            </Form.Item>
-            <Form.Item label="Company">
-              <Input name="company" value={resumeData.company} onChange={handleChange} />
-            </Form.Item>
-            <Form.Item label="Job Description">
-              <Input.TextArea name="jobDescription" value={resumeData.jobDescription} onChange={handleChange} />
-            </Form.Item>
+        
+           <Form autoComplete='off' form = {form} >
+          <Form.Item style={{display:'flex',justifyContent:'center'}}>
+              Add your Skills
+              </Form.Item>
+          
           </Form>
-        </div>
       ),
     },
     {
       title: 'Mini Project',
       content: (
-        <div>
-          <Form>
-            <Form.Item label="Job Title">
-              <Input name="jobTitle" value={resumeData.jobTitle} onChange={handleChange} />
+        <Form autoComplete='off' form = {form}>
+          <Form.Item style={{display:'flex',justifyContent:'center'}}>
+              Add your Mini Projects
+              </Form.Item>
+            <Form.Item >
+              <Input style={{padding:'12px 24px'}} name="jobTitle" value={resumeData.jobTitle} onChange={handleChange} placeholder='Project Name *'  />
             </Form.Item>
-            <Form.Item label="Company">
-              <Input name="company" value={resumeData.company} onChange={handleChange} />
+            <Form.Item >
+              <Input style={{padding:'12px 24px'}} name="company" value={resumeData.company} onChange={handleChange} placeholder='Tech Stack'/>
             </Form.Item>
-            <Form.Item label="Job Description">
-              <Input.TextArea name="jobDescription" value={resumeData.jobDescription} onChange={handleChange} />
+            <Form.Item >
+              <Input.TextArea name="jobDescription" value={resumeData.jobDescription} onChange={handleChange} placeholder='Description'/>
             </Form.Item>
           </Form>
-        </div>
       ),
     },
     {
       title: 'Social',
       content: (
-        <div>
-          <Form>
-            <Form.Item label="Job Title">
-              <Input name="jobTitle" value={resumeData.jobTitle} onChange={handleChange} />
+        <Form autoComplete='off' form = {form} >
+          <Form.Item style={{display:'flex',justifyContent:'center'}}>
+          Add social links like linkedin , github etc
+              </Form.Item>
+            <Form.Item>
+              <Input style={{padding:'12px 24px'}} name="jobTitle" value={resumeData.jobTitle} onChange={handleChange} placeholder='Social Links *'/>
             </Form.Item>
-            <Form.Item label="Company">
-              <Input name="company" value={resumeData.company} onChange={handleChange} />
-            </Form.Item>
-            <Form.Item label="Job Description">
-              <Input.TextArea name="jobDescription" value={resumeData.jobDescription} onChange={handleChange} />
-            </Form.Item>
+           
           </Form>
-        </div>
       ),
     },
     {
@@ -193,14 +191,14 @@ const Resume = ()=>{
       <div style={{ marginTop: 50 }}>
         {steps[current].content}
       </div>
-      <div style={{ marginTop: 20 }}>
+      <div style={{ marginTop: 20,display:'flex',justifySelf:'center'}}>
         {current < steps.length - 1 && (
           <Button type="primary" onClick={next}>
             Next
           </Button>
         )}
         {current > 0 && (
-          <Button style={{ margin: '0 8px' }} onClick={prev}>
+          <Button  type="primary" style={{ margin: '0 8px' }} onClick={prev}>
             Previous
           </Button>
         )}
