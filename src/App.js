@@ -13,12 +13,16 @@ function App() {
     
     useEffect(()=>{
       dispatch(fetchUserProfileInfo());
-    },[])
+    },[dispatch])
    
     return (
         <LoadingWrapper loading={loading}>
             <Router> 
                 <Routes>
+                    <Route
+                        path='/'
+                        element= {<Navigate to={ROUTE_CONSTANTS.REGISTER} />}
+                    />
                     <Route
                         path={ROUTE_CONSTANTS.LOGIN}
                         element={isAuth ? <Navigate to={ROUTE_CONSTANTS.RESUME} /> : <Login />}

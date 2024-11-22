@@ -2,6 +2,11 @@ export const ROUTE_CONSTANTS = {
     LOGIN: "/login",
     REGISTER: "/register",
     RESUME: "/resume",
+    PROFILE:"/resume/personalInfo",
+    EDUCATION:"/resume/education",
+    SKILLS:"/resume/skills",
+    PROJECT:"/resume/project",
+    SOCIAL:"/resume/social"
   };
   
   
