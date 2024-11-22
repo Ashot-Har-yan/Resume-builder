@@ -44,9 +44,6 @@ export const fetchUserProfileInfo = createAsyncThunk('data/fetchUserProfileInfo'
     reducers: {
       setIsAuth: (state, action) => {
         state.authUserInfo.isAuth = action.payload;
-      },
-      setProfileImgUrl: (state, action) => {
-        state.authUserInfo.userData.imgUrl = action.payload;
       }
     },
     extraReducers: (promise) => {
@@ -68,7 +65,7 @@ export const fetchUserProfileInfo = createAsyncThunk('data/fetchUserProfileInfo'
     }
   });
   
-  export const { setIsAuth,  setProfileImgUrl} = userProfileSlice.actions;
+  export const { setIsAuth} = userProfileSlice.actions;
   
   export default userProfileSlice.reducer;
   

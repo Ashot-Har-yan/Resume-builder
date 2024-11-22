@@ -110,9 +110,11 @@ const Register = () => {
         </Form.Item>
 
         <Flex align="center" gap="20px" justify='space-around' >
+          <Button type="primary" htmlType="submit">
           <Link to={ROUTE_CONSTANTS.LOGIN}>
             Sign in
           </Link>
+          </Button>
           <Button type="primary" htmlType="submit" loading={loading}>
             Sign up
           </Button>

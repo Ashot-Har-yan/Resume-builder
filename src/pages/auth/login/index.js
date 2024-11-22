@@ -65,7 +65,9 @@ const Login = () => {
         <Button type="primary" htmlType="submit" loading={loading}>
           Sign in
         </Button>
+        <Button type='primary' htmlType="submit">
         <Link to={ROUTE_CONSTANTS.REGISTER}>Create account</Link>
+        </Button>
           </Flex>
        
       </Form>
