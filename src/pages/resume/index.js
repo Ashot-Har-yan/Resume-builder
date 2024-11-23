@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {  Routes, Route, Link } from 'react-router-dom';
-import { Flex,Button, Steps, Form, Input, DatePicker ,Upload } from 'antd';
+import { Flex,Button, Steps,Row,Col, Form, Input, DatePicker ,Upload } from 'antd';
 import { ROUTE_CONSTANTS } from '../../util/constants';
 import Preview from './preview';
 import { signOut } from 'firebase/auth';
@@ -54,67 +54,99 @@ const Resume = ()=>{
     {
       title: 'Profile Section',
       content: (
-          <Form autoComplete='off' form = {form}>
-            <Form.Item style={{display:'flex',justifyContent:'center'}}>
-              Add your profile details</Form.Item>
-            <Form.Item >
-              <Input  style={{padding:'12px 24px'}} name="name" value={resumeData.name} onChange={handleChange} placeholder='First Name' />
+        <Form autoComplete="off" form={form} name="profile">
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="name"
+              rules={[{ required: true, message: 'Please input your first name!' }]}
+            >
+              <Input name="name" value={resumeData.name} onChange={handleChange} placeholder="First Name" />
             </Form.Item>
-            <Form.Item >
-              <Input style={{padding:'12px 24px'}} name="lastName" value={resumeData.lastName} onChange={handleChange} placeholder='Last Name'/>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="lastName"
+              rules={[{ required: true, message: 'Please input your last name!' }]}
+            >
+              <Input name="lastName" value={resumeData.lastName} onChange={handleChange} placeholder="Last Name" />
             </Form.Item>
-            <Form.Item >
-              <Input style={{padding:'12px 24px'}} name="number" value={resumeData.number} onChange={handleChange} placeholder='Phone Number'/>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="phone"
+              rules={[{ required: true, message: 'Please input your phone number!' }]}
+            >
+              <Input name="phone" value={resumeData.phone} onChange={handleChange} placeholder="Phone Number" />
             </Form.Item>
-            <Form.Item >
-              <Input style={{padding:'12px 24px'}} name="adress" value={resumeData.adress} onChange={handleChange} placeholder='Adress' />
+          </Col>
+          <Col span={12}>
+            <Form.Item name="address" rules={[{ required: true, message: 'Please input your address!' }]}>
+              <Input name="address" value={resumeData.address} onChange={handleChange} placeholder="Address" />
             </Form.Item>
-            <Form.Item >
-            <Upload>
-                <Button>
-                Choose File
-                </Button>
-                </Upload>
+          </Col>
+          <Col span={12}>
+              Profile Image
+            <Form.Item name="upload">
+              <Upload>
+                <Button>Choose File</Button>
+              </Upload>
             </Form.Item>
-          </Form>
+          </Col>
+        </Row>
+      </Form>
         
       ),
     },
     {
       title: 'Education Section',
       content: (
-        
-        <Form autoComplete='off' form = {form} >
-            <Form.Item style={{display:'flex',justifyContent:'center'}}>
-              Add your Education details
-              </Form.Item>
-            <Form.Item >
-              <Input style={{padding:'12px 24px'}} name="degree" value={resumeData.degree} onChange={handleChange} placeholder='Course Name' />
+        <Form autoComplete="off" form={form} name="education">
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="degree"
+              rules={[{ required: true, message: 'Please input your degree!' }]}
+            >
+              <Input name="degree" value={resumeData.degree} onChange={handleChange} placeholder="Course Name" />
             </Form.Item>
-            <Form.Item >
-              <Input style={{padding:'12px 24px'}} name="institution" value={resumeData.institution} onChange={handleChange} placeholder='Completion Year *' />
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="institution"
+              rules={[{ required: true, message: 'Please input your institution!' }]}
+            >
+              <Input name="institution" value={resumeData.institution} onChange={handleChange} placeholder="Institution" />
             </Form.Item>
-            <Form.Item >
-              <Input style={{padding:'12px 24px'}} name="institution" value={resumeData.institution} onChange={handleChange} placeholder='College/School' />
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="graduationDate"
+              rules={[{ required: true, message: 'Please input your graduation date!' }]}
+            >
+              <Input name="graduationDate" value={resumeData.graduationDate} onChange={handleChange} placeholder="Graduation Date" />
             </Form.Item>
-            <Form.Item >
-              <Input style={{padding:'12px 24px'}} name="institution" value={resumeData.institution} onChange={handleChange} placeholder='Percentage *' />
-            </Form.Item>
-            
-          </Form>
+          </Col>
+        </Row>
+      </Form>
         
       ),
     },
     {
       title: 'Skills Sector',
       content: (
-        
-           <Form autoComplete='off' form = {form} >
-          <Form.Item style={{display:'flex',justifyContent:'center'}}>
-              Add your Skills
-              </Form.Item>
-          
-          </Form>
+        <Form autoComplete="off" form={form} name="skills">
+        <Row gutter={10}>
+          <Col span={2}>
+            <Form.Item
+              name="skills"
+              rules={[{ required: true, message: 'Please input your skills!' }]}
+            >
+              <Input  style={{padding:'12px 24px'}}name="skills" value={resumeData.skills} onChange={handleChange} placeholder="Skills" />
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
       ),
     },
     {
@@ -124,15 +156,23 @@ const Resume = ()=>{
           <Form.Item style={{display:'flex',justifyContent:'center'}}>
               Add your Mini Projects
               </Form.Item>
+              <Row gutter={10}>
+          <Col span={8}>
             <Form.Item >
               <Input style={{padding:'12px 24px'}} name="jobTitle" value={resumeData.jobTitle} onChange={handleChange} placeholder='Project Name *'  />
             </Form.Item>
+            </Col>
+            <Col span={8}>
             <Form.Item >
               <Input style={{padding:'12px 24px'}} name="company" value={resumeData.company} onChange={handleChange} placeholder='Tech Stack'/>
             </Form.Item>
+            </Col>
+            <Col span={8}>
             <Form.Item >
-              <Input.TextArea name="jobDescription" value={resumeData.jobDescription} onChange={handleChange} placeholder='Description'/>
+              <Input style={{padding:'12px 24px'}} name="jobDescription" value={resumeData.jobDescription} onChange={handleChange} placeholder='Description'/>
             </Form.Item>
+            </Col>
+            </Row>
           </Form>
       ),
     },
@@ -143,10 +183,13 @@ const Resume = ()=>{
           <Form.Item style={{display:'flex',justifyContent:'center'}}>
           Add social links like linkedin , github etc
               </Form.Item>
+              <Row gutter={10}>
+                <Col span={24}>
             <Form.Item>
               <Input style={{padding:'12px 24px'}} name="jobTitle" value={resumeData.jobTitle} onChange={handleChange} placeholder='Social Links *'/>
             </Form.Item>
-           
+            </Col>
+            </Row>
           </Form>
       ),
     },
