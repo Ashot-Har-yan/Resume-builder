@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import {  Routes, Route, Link } from 'react-router-dom';
-import { Flex,Button, Steps,Row,Col, Form, Input, DatePicker ,Upload } from 'antd';
-import { ROUTE_CONSTANTS } from '../../util/constants';
-import Preview from './preview';
+import { Flex,Button, Steps,Row,Col, Form, Input ,Upload } from 'antd';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useDispatch } from 'react-redux';
@@ -47,9 +44,9 @@ const Resume = ()=>{
       console.log(e, ':signOut error')
     }
   };
-  const handleDateChange = (date, dateString) => {
-    setResumeData({ ...resumeData, graduationDate: dateString });
-  };
+  // const handleDateChange = (date, dateString) => {
+  //   setResumeData({ ...resumeData, graduationDate: dateString });
+  // };
   const steps = [
     {
       title: 'Profile Section',
