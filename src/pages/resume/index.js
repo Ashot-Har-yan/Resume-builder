@@ -14,14 +14,18 @@ const Resume = ()=>{
     const [form] = Form.useForm()
   const [resumeData, setResumeData] = useState({
     name: '',
-    email: '',
+    lastName:'',
     phone: '',
-    jobTitle: '',
-    company: '',
-    jobDescription: '',
-    degree: '',
+    address:'',
+    courseName:'',
     institution: '',
-    graduationDate: ''
+    graduationDate: '',
+    skills:'',
+    projectName: '',
+    tech: '',
+    projectDescript: '',
+    social: '',
+    profileImage:null,
   });
   const next = () => {
     setCurrent(current + 1);
@@ -32,9 +36,19 @@ const Resume = ()=>{
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setResumeData({resumeData, [name]: value });
+    setResumeData((prevData) => ({
+      ...prevData, // Spread the previous state
+      [name]: value, // Update only the field that changed
+    }));
   };
- 
+  const handleImageChange = ({ fileList }) => {
+    if (fileList.length > 0) {
+      // Assuming only one image will be uploaded, store its URL
+      const file = fileList[0].originFileObj;
+      const imageURL = URL.createObjectURL(file); // Create object URL for the image
+      setResumeData({ ...resumeData, profileImage: imageURL });
+    }
+  };
   const handleSignOut = async () => {
     try {
       await signOut(auth);
@@ -52,60 +66,100 @@ const Resume = ()=>{
       title: 'Profile Section',
       content: (
         <Form autoComplete="off" form={form} name="profile">
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="name"
-              rules={[{ required: true, message: 'Please input your first name!' }]}
-            >
-              <Input name="name" value={resumeData.name} onChange={handleChange} placeholder="First Name" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="lastName"
-              rules={[{ required: true, message: 'Please input your last name!' }]}
-            >
-              <Input name="lastName" value={resumeData.lastName} onChange={handleChange} placeholder="Last Name" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="phone"
-              rules={[{ required: true, message: 'Please input your phone number!' }]}
-            >
-              <Input name="phone" value={resumeData.phone} onChange={handleChange} placeholder="Phone Number" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item name="address" rules={[{ required: true, message: 'Please input your address!' }]}>
-              <Input name="address" value={resumeData.address} onChange={handleChange} placeholder="Address" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-              Profile Image
-            <Form.Item name="upload">
-              <Upload>
-                <Button>Choose File</Button>
-              </Upload>
-            </Form.Item>
-          </Col>
-        </Row>
-      </Form>
-        
+          <Row gutter={[40, 16]}>
+            <Col span={12}>
+              <Form.Item
+                name="name"
+                rules={[{ required: true, message: 'Please input your first name!' }]}
+              >
+                <Input
+                  style={{ padding: '12px 24px' }}
+                  name="name"
+                  value={resumeData.name}
+                  onChange={handleChange}
+                  placeholder="First Name"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="lastName"
+                rules={[{ required: true, message: 'Please input your last name!' }]}
+              >
+                <Input
+                  style={{ padding: '12px 24px' }}
+                  name="lastName"
+                  value={resumeData.lastName}
+                  onChange={handleChange}
+                  placeholder="Last Name"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="phone"
+                rules={[{ required: true, message: 'Please input your phone number!' }]}
+              >
+                <Input
+                  style={{ padding: '12px 24px' }}
+                  name="phone"
+                  value={resumeData.phone}
+                  onChange={handleChange}
+                  placeholder="Phone Number"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="address"
+                rules={[{ required: true, message: 'Please input your address!' }]}
+              >
+                <Input
+                  style={{ padding: '12px 24px' }}
+                  name="address"
+                  value={resumeData.address}
+                  onChange={handleChange}
+                  placeholder="Address"
+                />
+              </Form.Item>
+            </Col>
+
+            <Col span={12}>
+              <Form.Item name="upload">
+                <Upload
+                  accept="image/*"
+                  beforeUpload={() => false} // Prevent automatic upload
+                  onChange={handleImageChange}
+                  showUploadList={false} // Hide upload list
+                >
+                  <Button>Choose File</Button>
+                </Upload>
+                {resumeData.profileImage && (
+                  <div style={{ marginTop: 10 }}>
+                    <img
+                      src={resumeData.profileImage}
+                      alt="Profile"
+                      style={{ width: 100, height: 100, borderRadius: '50%' }}
+                    />
+                  </div>
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
       ),
     },
     {
       title: 'Education Section',
       content: (
         <Form autoComplete="off" form={form} name="education">
-        <Row gutter={16}>
+        <Row gutter={[40,16]}>
           <Col span={12}>
             <Form.Item
-              name="degree"
+              name="courseName"
               rules={[{ required: true, message: 'Please input your degree!' }]}
             >
-              <Input name="degree" value={resumeData.degree} onChange={handleChange} placeholder="Course Name" />
+              <Input  style={{padding:'12px 24px'}} name="courseName" value={resumeData.courseName} onChange={handleChange} placeholder="Course Name" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -113,7 +167,7 @@ const Resume = ()=>{
               name="institution"
               rules={[{ required: true, message: 'Please input your institution!' }]}
             >
-              <Input name="institution" value={resumeData.institution} onChange={handleChange} placeholder="Institution" />
+              <Input  style={{padding:'12px 24px'}} name="institution" value={resumeData.institution} onChange={handleChange} placeholder="Institution" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -121,7 +175,7 @@ const Resume = ()=>{
               name="graduationDate"
               rules={[{ required: true, message: 'Please input your graduation date!' }]}
             >
-              <Input name="graduationDate" value={resumeData.graduationDate} onChange={handleChange} placeholder="Graduation Date" />
+              <Input  style={{padding:'12px 24px'}} name="graduationDate" value={resumeData.graduationDate} onChange={handleChange} placeholder="Graduation Date" />
             </Form.Item>
           </Col>
         </Row>
@@ -156,17 +210,17 @@ const Resume = ()=>{
               <Row gutter={10}>
           <Col span={8}>
             <Form.Item >
-              <Input style={{padding:'12px 24px'}} name="jobTitle" value={resumeData.jobTitle} onChange={handleChange} placeholder='Project Name *'  />
+              <Input style={{padding:'12px 24px'}} name="projectName" value={resumeData.projectName} onChange={handleChange} placeholder='Project Name *'  />
             </Form.Item>
             </Col>
             <Col span={8}>
             <Form.Item >
-              <Input style={{padding:'12px 24px'}} name="company" value={resumeData.company} onChange={handleChange} placeholder='Tech Stack'/>
+              <Input style={{padding:'12px 24px'}} name="tech" value={resumeData.tech} onChange={handleChange} placeholder='Tech Stack'/>
             </Form.Item>
             </Col>
             <Col span={8}>
             <Form.Item >
-              <Input style={{padding:'12px 24px'}} name="jobDescription" value={resumeData.jobDescription} onChange={handleChange} placeholder='Description'/>
+              <Input style={{padding:'12px 24px'}} name="projectDescript" value={resumeData.projectDescript} onChange={handleChange} placeholder='Description'/>
             </Form.Item>
             </Col>
             </Row>
@@ -183,7 +237,7 @@ const Resume = ()=>{
               <Row gutter={10}>
                 <Col span={24}>
             <Form.Item>
-              <Input style={{padding:'12px 24px'}} name="jobTitle" value={resumeData.jobTitle} onChange={handleChange} placeholder='Social Links *'/>
+              <Input style={{padding:'12px 24px'}} name="social" value={resumeData.social} onChange={handleChange} placeholder='Social Links *'/>
             </Form.Item>
             </Col>
             </Row>
@@ -193,18 +247,35 @@ const Resume = ()=>{
     {
       title: 'Preview',
       content: (
-        <div>
-          <h3>Resume Preview</h3>
-          <p><strong>Name:</strong> {resumeData.name}</p>
-          <p><strong>Email:</strong> {resumeData.email}</p>
-          <p><strong>Phone:</strong> {resumeData.phone}</p>
-          <h4>Experience</h4>
-          <p>{resumeData.jobTitle} at {resumeData.company}</p>
-          <p>{resumeData.jobDescription}</p>
+        <Form style={{justifySelf:'center'}}>
+          {resumeData.profileImage && (
+            <div style={{ marginBottom: '20px' }}>
+              <img
+                src={resumeData.profileImage}
+                alt="Profile"
+                style={{ width: 100, height: 100, borderRadius: '50%' }} // Image preview
+              />
+            </div>
+          )}
+          {/* <h4><strong>Name:</strong></h4>  */}
+          <p>{resumeData.name} {resumeData.lastName}</p>
+          <h4><strong>Phone</strong></h4>
+          <span>{resumeData.phone}</span>
+          <h4><strong>Address</strong></h4>
+          <span>{resumeData.address}</span>
           <h4>Education</h4>
-          <p>{resumeData.degree} from {resumeData.institution}</p>
-          <p>Graduation Date: {resumeData.graduationDate}</p>
-        </div>
+          <h2>Course Name: <span>{resumeData.courseName}</span></h2>
+          <h2>Institution: <span>{resumeData.institution}</span></h2>
+          <h2>Graduation Date: <span>{resumeData.graduationDate}</span></h2>
+          <h4><strong>Skills</strong></h4>
+          <span>{resumeData.skills}</span>
+          <h4><strong>Projects</strong></h4>
+          <h2>Project name: <span>{resumeData.projectName}</span></h2>
+          <h2>Tech Stack: <span>{resumeData.tech}</span></h2>
+          <h2>Description: <span>{resumeData.projectDescript}</span></h2>
+          <h4><strong>Social</strong></h4>
+          <span>{resumeData.social}</span>
+        </Form>
       ),
     },
   ];
@@ -223,7 +294,7 @@ const Resume = ()=>{
         </div>
        
           <div style={{ width: '98%', margin: '5% auto ' }}>
-      <Steps current={current}>
+      <Steps current={current} onChange={setCurrent} >
         {steps.map((step) => (
           <Step key={step.title} title={step.title} />
         ))}
