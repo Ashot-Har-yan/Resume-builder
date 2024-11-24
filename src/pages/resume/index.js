@@ -248,6 +248,7 @@ const Resume = ()=>{
       title: 'Preview',
       content: (
         <Form style={{justifySelf:'center'}}>
+          <div className='finalResume'>
           {resumeData.profileImage && (
             <div style={{ marginBottom: '20px' }}>
               <img
@@ -257,7 +258,7 @@ const Resume = ()=>{
               />
             </div>
           )}
-          {/* <h4><strong>Name:</strong></h4>  */}
+          
           <p>{resumeData.name} {resumeData.lastName}</p>
           <h4><strong>Phone</strong></h4>
           <span>{resumeData.phone}</span>
@@ -275,6 +276,7 @@ const Resume = ()=>{
           <h2>Description: <span>{resumeData.projectDescript}</span></h2>
           <h4><strong>Social</strong></h4>
           <span>{resumeData.social}</span>
+          </div>
         </Form>
       ),
     },
