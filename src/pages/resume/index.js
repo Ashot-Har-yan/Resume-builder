@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Flex,Button, Steps,Row,Col, Form, Input ,Upload } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useDispatch } from 'react-redux';
@@ -10,6 +11,7 @@ import './index.css';
 const Resume = ()=>{
     const dispatch = useDispatch();
     const [current, setCurrent] = useState(0);
+    const [skillsList, setSkillsList] = useState([]);
     const { Step } = Steps;
     const [form] = Form.useForm()
   const [resumeData, setResumeData] = useState({
@@ -20,7 +22,6 @@ const Resume = ()=>{
     courseName:'',
     institution: '',
     graduationDate: '',
-    skills:'',
     projectName: '',
     tech: '',
     projectDescript: '',
@@ -37,15 +38,15 @@ const Resume = ()=>{
   const handleChange = (e) => {
     const { name, value } = e.target;
     setResumeData((prevData) => ({
-      ...prevData, // Spread the previous state
-      [name]: value, // Update only the field that changed
+      ...prevData, 
+      [name]: value, 
     }));
   };
   const handleImageChange = ({ fileList }) => {
     if (fileList.length > 0) {
-      // Assuming only one image will be uploaded, store its URL
+      
       const file = fileList[0].originFileObj;
-      const imageURL = URL.createObjectURL(file); // Create object URL for the image
+      const imageURL = URL.createObjectURL(file); 
       setResumeData({ ...resumeData, profileImage: imageURL });
     }
   };
@@ -57,6 +58,14 @@ const Resume = ()=>{
     } catch (e) {
       console.log(e, ':signOut error')
     }
+  };
+  const addSkill = () => {
+    setSkillsList([...skillsList, '']); // Add an empty string for new skill input
+  };
+  const handleSkillChange = (index, e) => {
+    const updatedSkills = [...skillsList];
+    updatedSkills[index] = e.target.value; // Update the specific skill input
+    setSkillsList(updatedSkills);
   };
   // const handleDateChange = (date, dateString) => {
   //   setResumeData({ ...resumeData, graduationDate: dateString });
@@ -78,6 +87,7 @@ const Resume = ()=>{
                   value={resumeData.name}
                   onChange={handleChange}
                   placeholder="First Name"
+                  prefix={<UserOutlined />}
                 />
               </Form.Item>
             </Col>
@@ -92,6 +102,7 @@ const Resume = ()=>{
                   value={resumeData.lastName}
                   onChange={handleChange}
                   placeholder="Last Name"
+                  prefix={<UserOutlined />}
                 />
               </Form.Item>
             </Col>
@@ -128,9 +139,9 @@ const Resume = ()=>{
               <Form.Item name="upload">
                 <Upload
                   accept="image/*"
-                  beforeUpload={() => false} // Prevent automatic upload
+                  beforeUpload={() => false} 
                   onChange={handleImageChange}
-                  showUploadList={false} // Hide upload list
+                  showUploadList={false} 
                 >
                   <Button>Choose File</Button>
                 </Upload>
@@ -187,17 +198,27 @@ const Resume = ()=>{
       title: 'Skills Sector',
       content: (
         <Form autoComplete="off" form={form} name="skills">
-        <Row gutter={10}>
-          <Col span={2}>
-            <Form.Item
-              name="skills"
-              rules={[{ required: true, message: 'Please input your skills!' }]}
-            >
-              <Input  style={{padding:'12px 24px'}}name="skills" value={resumeData.skills} onChange={handleChange} placeholder="Skills" />
-            </Form.Item>
-          </Col>
-        </Row>
-      </Form>
+          <Row gutter={10}>
+            {skillsList.map((skill, index) => (
+              <Col span={2} key={index}>
+                <Form.Item
+                  name={`skills[${index}]`}
+                  rules={[{ required: true, message: 'Please input your skill!' }]}
+                >
+                  <Input
+                    style={{ padding: '12px 24px' }}
+                    value={skill}
+                    onChange={(e) => handleSkillChange(index, e)}
+                    placeholder="Skill"
+                  />
+                </Form.Item>
+              </Col>
+            ))}
+          </Row>
+          <Button type="dashed" onClick={addSkill} style={{ marginTop: '10px' }}>
+            Add Skill
+          </Button>
+        </Form>
       ),
     },
     {
@@ -254,7 +275,7 @@ const Resume = ()=>{
               <img
                 src={resumeData.profileImage}
                 alt="Profile"
-                style={{ width: 100, height: 100, borderRadius: '50%' }} // Image preview
+                style={{ width: 100, height: 100, borderRadius: '50%' }} 
               />
             </div>
           )}
@@ -269,7 +290,11 @@ const Resume = ()=>{
           <h2>Institution: <span>{resumeData.institution}</span></h2>
           <h2>Graduation Date: <span>{resumeData.graduationDate}</span></h2>
           <h4><strong>Skills</strong></h4>
-          <span>{resumeData.skills}</span>
+          <ul>
+              {skillsList.map((skill, index) => (
+                <li key={index}>{skill}</li>
+              ))}
+              </ul>
           <h4><strong>Projects</strong></h4>
           <h2>Project name: <span>{resumeData.projectName}</span></h2>
           <h2>Tech Stack: <span>{resumeData.tech}</span></h2>
