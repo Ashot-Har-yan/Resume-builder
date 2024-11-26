@@ -330,14 +330,14 @@ const Resume = ()=>{
         {steps[current].content}
       </div>
       <div style={{ marginTop: 20,display:'flex',justifySelf:'center'}}>
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={next}>
-            Next
-          </Button>
-        )}
         {current > 0 && (
           <Button  type="primary" style={{ margin: '0 8px' }} onClick={prev}>
             Previous
+          </Button>
+        )}
+        {current < steps.length - 1 && (
+          <Button type="primary" onClick={next}>
+            Next
           </Button>
         )}
       </div>
